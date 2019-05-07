@@ -18,7 +18,10 @@ void insert(char *str, int pos){
     	int n=0, rehash=HASH_SIZE;
  
 	while(arr[pos][0]!= '\0') {  // INT_MIN and INT_MAX indicates that cell is empty. So if cell is empty loop will break and goto bottom of the loop to insert element
-		rehash=floor(rehash/2);
+		if (rehash==1)
+                	rehash=HASH_SIZE;
+
+		rehash=ceil(rehash/2);
 		pos = (pos+1)%(rehash);
 		n++;
 		if(n==HASH_SIZE)
@@ -41,7 +44,9 @@ int search(char *str, int pos){
 			return pos;
 		else{
             		if(arr[pos][0]!='\0'){
-				rehash=floor(rehash/2);
+				if (rehash==1)
+					rehash=HASH_SIZE;
+				rehash=ceil(rehash/2);
                 		pos = (pos+1) %rehash;
 			}
 		}
