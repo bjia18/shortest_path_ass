@@ -66,9 +66,11 @@ void shortest_distance(char *port1, char *port2){
 			if_port2=1;
 	}
 	hashed=1;
+	//generate_random(src, dest, 100);
 	if (if_port1 && if_port2){
 		dijkstra(src, dest, weights, port1, port2, dist_line_num, names_line_num);
 		bellman_ford(src, dest, weights, port1, port2, dist_line_num*2, names_line_num);
+
 	} else
 		printf("Wrong airport names.\n\n");
 	fclose(dist);
@@ -111,7 +113,6 @@ void commands(){
 					port1[i]=toupper(port1[i]);
 					port2[i]=toupper(port2[i]);
 				}
-					
 				shortest_distance(port1, port2);
 			}else
 				printf("Wrong command. Type 'help' for command list.\n\n"); 

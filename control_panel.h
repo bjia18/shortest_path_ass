@@ -10,6 +10,7 @@
 #include <limits.h>
 #include <math.h>
 #include <stdbool.h>
+#include <time.h>
 
 #define airports_txt "small-airports.txt"
 #define dist_txt "small-dists.txt"
@@ -63,12 +64,27 @@ void commands();
 void airports();
 void help();
 void shortest_distance(char *port1, char *port2);
+
 void dijkstra(char src[][4], char dest[][4], int *weights, char *port1, char *port2, int edge_num, int v_num);
+
 void bellman_ford(char src[][4], char dest[][4], int *weights, char *port1, char *port2, int edge_num, int v_num);
 
 int simple_hash(char *str);
 void insert(char *str, int pos);
 
 struct Graph *createGraph(int V, int E);
+struct ListGraph * createListGraph(int V);
+
+void addEdge (struct ListGraph *graph, int src, int dest, int weight);
+struct MinHeapNode *newMinHeapNode(int v, int dist);
+struct MinHeap *createMinHeap(int capacity);
+void swapMinHeapNode(struct MinHeapNode **a, struct MinHeapNode **b);
+void MinHeapify(struct MinHeap *minheap, int idx);
+int isEmpty(struct MinHeap *minHeap);
+struct MinHeapNode *extractMin(struct MinHeap *minHeap);
+void decreaseKey(struct MinHeap *minHeap, int v, int dist);
+bool isInMinHeap(struct MinHeap *minHeap, int v);
+
+void generate_random(char src[][4], char dest[][4], int total);
 
 #endif

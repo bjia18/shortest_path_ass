@@ -15,8 +15,11 @@ dijkstra_alg.o: dijkstra_alg.c control_panel.h
 bellman_ford_alg.o: bellman_ford_alg.c control_panel.h
 	$(CC) $(CFLAGS) -c bellman_ford_alg.c
 
-test: control_panel.o open_addressing.o dijkstra_alg.o bellman_ford_alg.o 
-	$(CC) $(CFLAGS) -o test control_panel.o open_addressing.o dijkstra_alg.o bellman_ford_alg.o 
+perf_test.o: perf_test.c control_panel.h
+	$(CC) $(CFLAGS) -c perf_test.c
+
+test: control_panel.o open_addressing.o dijkstra_alg.o bellman_ford_alg.o perf_test.o control_panel.h
+	$(CC) $(CFLAGS) -o test control_panel.o open_addressing.o dijkstra_alg.o bellman_ford_alg.o perf_test.o
 
 clean:
 	rm *.o test

@@ -236,6 +236,11 @@ void dijkstra(char src[][4], char dest[][4], int *weights, char *port1, char *po
                         edges[i].weight=0;
                 dsn=predecessor[dsn];
         }
+	free(graph->array);
+	free(graph);
+	free(minHeap->pos);
+	free(minHeap->array);
+	free(minHeap);
         /*for (int i=E-1; i>=0; i--){
                 if (edges[i].weight!=0)
                         printf("%s\t%s\t\t%d\n", map[edges[i].source], map[edges[i].destination], edges[i].weight);
