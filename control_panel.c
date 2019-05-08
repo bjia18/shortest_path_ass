@@ -1,6 +1,7 @@
 #include "control_panel.h"
 
 int hashed=0;
+char map[][4]={'\0'};
 
 void help(){
 	printf("COMMANDS:\n\nhelp: command list\n\nairports: list of airports serviced by the FTA\n\nquit: exits the system\n\ndistance <airport 1> <airport2>: shortest path & length between 2 airports using routes flown by the airline\n\n");
@@ -44,31 +45,29 @@ void shortest_distance(char *port1, char *port2){
 	for (int i=0; i<dist_line_num; i++){
 		fscanf(dist, "%s\t%s\t%s\n", src[i], dest[i], temp_int);
 		weights[i]=atoi(temp_int);
-		//printf("%s %s %d\n", src[i], dest[i], weights[i]);
 	}
 	
-	for (int i=0; i<names_line_num; i++){
+	for (int i=0; i<names_line_num; i++)
 		fscanf(names, "%s\t%*[^\n]\n", airport_names[i]);
-		//printf("%s\n", airport_names[i]);
-	}
+
 	int if_port1=0, if_port2=0;
 	/*if (!strcmp(port1,port2)){
 		printf("Same airports. Please input different ones.\n\n");
 		return;
-	}*/	
+	}*/
 	for (int i=0;i<names_line_num;i++){
-		if (hashed==0)
-			insert(airport_names[i], simple_hash(airport_names[i]));
+		if (hashed==0){
+			insert(airport_names[i], i);
+			strcpy(map[i], airport_names[i]);
+		}
 		if (!strcmp(port1, airport_names[i]))
 			if_port1=1;
 		else if (!strcmp(port2, airport_names[i]))
 			if_port2=1;
-		//printf("(%s) (%s) (%d) (%d) (%d)\n", port1, port2, if_diff, if_port1, if_port2);
-		//printf("%s\n", airport_names[i]);
 	}
 	hashed=1;
 	if (if_port1 && if_port2){
-		dijkstra(src, dest, weights, port1, port2, dist_line_num*2, names_line_num);
+		dijkstra(src, dest, weights, port1, port2, dist_line_num, names_line_num);
 		bellman_ford(src, dest, weights, port1, port2, dist_line_num*2, names_line_num);
 	} else
 		printf("Wrong airport names.\n\n");
@@ -80,6 +79,7 @@ void shortest_distance(char *port1, char *port2){
 void commands(){
 	char commd[17];
 	while (1){
+		printf("> ");
 		if(fgets(commd,17,stdin)){
 			char *p;
 		    	if((p=strchr(commd, '\n'))!=NULL)//check exist newline
