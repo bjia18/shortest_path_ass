@@ -1,5 +1,3 @@
-#define _CRT_SECURE_NO_WARNINGS
-
 #ifndef CONTROL_PANEL_H
 #define CONTROL_PANEL_H 
 
@@ -11,9 +9,10 @@
 #include <math.h>
 #include <stdbool.h>
 #include <time.h>
+#include <malloc.h>
 
-#define airports_txt "small-airports.txt"
-#define dist_txt "small-dists.txt"
+#define airports_txt "large-airports.txt"
+#define dist_txt "large-dists.txt"
 #define HASH_SIZE 26*26*26
 
 struct AdjListNode
@@ -57,13 +56,14 @@ struct Graph{
 };
 
 extern int arr[HASH_SIZE];
-extern char map[][4];
+extern char **map;
 extern int hashed;
 
+void initialize(int total);
 void commands();
 void airports();
 void help();
-void shortest_distance(char *port1, char *port2);
+void shortest_distance(char *port1, char *port2, FILE **speed);
 
 void dijkstra(char src[][4], char dest[][4], int *weights, char *port1, char *port2, int edge_num, int v_num);
 

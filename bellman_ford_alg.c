@@ -2,14 +2,11 @@
 
 struct Graph* createGraph(int V, int E){
     struct Graph* graph = (struct Graph*) malloc(sizeof(struct Graph));
-	//Allocating space to structure graph
 
-    graph->V = V;   //assigning values to structure elements that taken form user.
-
+    graph->V = V;       
     graph->E = E;
 
     graph->edge = (struct Edge*) malloc( graph->E * sizeof( struct Edge ) );
-	//Creating "Edge" type structures inside "Graph" structure, the number of edge type structures are equal to number of edges
 
     return graph;
 }
@@ -20,7 +17,6 @@ void bellman_ford(char src[][4], char dest[][4], int *weights, char *port1, char
 
 	int V = graph->V;
         int E = graph->E;
-    	//calling the function to allocate space to these many vertices and edges
 	
 	int j=0;
 	for(int i=0; i<edge_num; i+=2){
@@ -31,8 +27,6 @@ void bellman_ford(char src[][4], char dest[][4], int *weights, char *port1, char
                 graph->edge[i+1].destination=arr[simple_hash(src[j])];
                 graph->edge[i+1].weight=weights[j];
 		j++;
-
-		//printf("src: %d, dest: %d, weight: %d\n", graph->edge[i].source, graph->edge[i].destination, graph->edge[i].weight);
 	}
 	
 	int dist[E], predecessor[E], weights_table[E];
@@ -43,12 +37,10 @@ void bellman_ford(char src[][4], char dest[][4], int *weights, char *port1, char
 		weights_table[i]=0;
 	}
 
-    // This is initial step that we know , we initialize all distance to infinity except source.
-	// We assign source distance as 0(zero)
+	// assign source distance as 0(zero)
 
     dist[arr[simple_hash(port1)]] = 0;
 
-    //The shortest path of graph that contain V vertices, never contain "V-1" edges. So we do here "V-1" relaxations
     for (int i = 1; i <= V-1; i++){
         for (int j = 0; j < E; j++){
             int u = graph->edge[j].source;
@@ -62,22 +54,18 @@ void bellman_ford(char src[][4], char dest[][4], int *weights, char *port1, char
 		    predecessor[v]=u;
 		    weights_table[v]=weight;
 	    }
-	    //printf("SD: %s %s %d v: %d, u: %d\n", arr[v], arr[u], dist[v],v,u);
         }
     }
 
-    // Actually upto now shortest path found. But BellmanFord checks for negative edge cycle. In this step we check for that
-    // shortest distances if graph doesn't contain negative weight cycle.
 	if (dist[arr[simple_hash(port2)]]==INT_MAX){
                 printf("Path does not exist.\n\n");
                 return;
         }
 
-    // If we get a shorter path, then there is a negative edge cycle.
     //printf("Bellman-Ford:\nSource\tDestination\tShortest Distance\n");
-	printf("Source\tDestination\tShortest Distance\n");
-        printf("%s\t%s\t\t%d\n\n", port1, port2, dist[arr[simple_hash(port2)]]);
-        printf("Path\n");
+	//printf("Source\tDestination\tShortest Distance\n");
+        //printf("%s\t%s\t\t%d\n\n", port1, port2, dist[arr[simple_hash(port2)]]);
+        //printf("Path\n");
 	struct Edge edges[E];
 	int dsn=arr[simple_hash(port2)];
 
@@ -95,7 +83,8 @@ void bellman_ford(char src[][4], char dest[][4], int *weights, char *port1, char
 	}
 	for (int i=E-1; i>=0; i--){
 		if (edges[i].weight!=0)
-			printf("%s\t%s\t\t%d\n", map[edges[i].source], map[edges[i].destination], edges[i].weight);
+			continue;
+			//printf("%s\t%s\t\t%d\n", map[edges[i].source], map[edges[i].destination], edges[i].weight);
 	}
 	printf("\n");
 	free(graph->edge);
