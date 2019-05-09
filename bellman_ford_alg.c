@@ -63,9 +63,9 @@ void bellman_ford(char src[][4], char dest[][4], int *weights, char *port1, char
         }
 
     //printf("Bellman-Ford:\nSource\tDestination\tShortest Distance\n");
-	//printf("Source\tDestination\tShortest Distance\n");
-        //printf("%s\t%s\t\t%d\n\n", port1, port2, dist[arr[simple_hash(port2)]]);
-        //printf("Path\n");
+	printf("Source\tDestination\tShortest Distance\n");
+        printf("%s\t%s\t\t%d\n\n", port1, port2, dist[arr[simple_hash(port2)]]);
+        printf("Path\n");
 	struct Edge edges[E];
 	int dsn=arr[simple_hash(port2)];
 
@@ -83,8 +83,7 @@ void bellman_ford(char src[][4], char dest[][4], int *weights, char *port1, char
 	}
 	for (int i=E-1; i>=0; i--){
 		if (edges[i].weight!=0)
-			continue;
-			//printf("%s\t%s\t\t%d\n", map[edges[i].source], map[edges[i].destination], edges[i].weight);
+			printf("%s\t%s\t\t%d\n", map[edges[i].source], map[edges[i].destination], edges[i].weight);
 	}
 	printf("\n");
 	free(graph->edge);
